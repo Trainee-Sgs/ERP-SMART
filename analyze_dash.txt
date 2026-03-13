@@ -1,0 +1,8 @@
+Analyzing dashboard.dart...                                     
+
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\erp_homescreen\dashboard.dart:22:60 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\erp_homescreen\dashboard.dart:27:60 - deprecated_member_use
+   info - Unnecessary use of multiple underscores - lib\screens\erp_homescreen\dashboard.dart:48:54 - unnecessary_underscores
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\erp_homescreen\dashboard.dart:299:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\erp_homescreen\dashboard.dart:325:54 - deprecated_member_use
+

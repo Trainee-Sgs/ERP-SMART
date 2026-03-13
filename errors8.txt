@@ -1,0 +1,27 @@
+﻿Analyzing ERP-SMART-APP...                                      
+
+   info - Unnecessary use of multiple underscores - lib\ERP_HomeScreen\LoginScreen\login_screen.dart:234:22 - unnecessary_underscores
+   info - Statements in a for should be enclosed in a block - lib\ERP_HomeScreen\LoginScreen\login_screen.dart:266:7 - curly_braces_in_flow_control_structures
+   info - Statements in a for should be enclosed in a block - lib\ERP_HomeScreen\LoginScreen\login_screen.dart:268:7 - curly_braces_in_flow_control_structures
+   info - Unnecessary use of multiple underscores - lib\ERP_HomeScreen\LoginScreen\login_screen.dart:588:31 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\ERP_HomeScreen\LoginScreen\login_screen.dart:588:35 - unnecessary_underscores
+   info - Statements in a for should be enclosed in a block - lib\ERP_HomeScreen\LoginScreen\signup_screen.dart:47:63 - curly_braces_in_flow_control_structures
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\ERP_HomeScreen\LoginScreen\signup_screen.dart:180:31 - deprecated_member_use
+   info - Unnecessary use of multiple underscores - lib\ERP_HomeScreen\LoginScreen\signup_screen.dart:331:22 - unnecessary_underscores
+   info - Statements in a for should be enclosed in a block - lib\ERP_HomeScreen\LoginScreen\signup_screen.dart:363:7 - curly_braces_in_flow_control_structures
+   info - Statements in a for should be enclosed in a block - lib\ERP_HomeScreen\LoginScreen\signup_screen.dart:365:7 - curly_braces_in_flow_control_structures
+   info - Unnecessary use of multiple underscores - lib\ERP_HomeScreen\LoginScreen\signup_screen.dart:726:31 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\ERP_HomeScreen\LoginScreen\signup_screen.dart:726:35 - unnecessary_underscores
+   info - Unnecessary 'const' keyword - lib\ERP_HomeScreen\dashboard.dart:157:19 - unnecessary_const
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ERP_HomeScreen\overall_report_screen.dart:17:35 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ERP_HomeScreen\overall_report_screen.dart:52:59 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ERP_HomeScreen\overall_report_screen.dart:111:43 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ERP_HomeScreen\overall_report_screen.dart:116:43 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ERP_HomeScreen\overall_report_screen.dart:184:43 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ERP_HomeScreen\overall_report_screen.dart:189:43 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ERP_HomeScreen\overall_report_screen.dart:318:30 - deprecated_member_use
+   info - 'activeColor' is deprecated and shouldn't be used. Use activeTrackColor instead. This feature was deprecated after v3.24.0-0.2.pre - lib\ERP_HomeScreen\settings_screen.dart:359:27 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ERP_Moduels\HRM_Module\HomeScreen\dashboard.dart:194:54 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ERP_Moduels\HRM_Module\HomeScreen\dashboard.dart:308:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ERP_Moduels\HRM_Module\HomeScreen\dashboard.dart:313:47 - deprecated_member_use
+

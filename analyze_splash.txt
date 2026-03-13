@@ -1,0 +1,18 @@
+Analyzing splash_screen.dart...                                 
+
+  error - Invalid constant value - lib\screens\splash_screen.dart:44:48 - invalid_constant
+  error - The getter 'outBack' isn't defined for the type 'Curves' - lib\screens\splash_screen.dart:44:55 - undefined_getter
+   info - Unnecessary use of multiple underscores - lib\screens\splash_screen.dart:63:30 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\screens\splash_screen.dart:63:34 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\screens\splash_screen.dart:64:48 - unnecessary_underscores
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\splash_screen.dart:91:46 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\splash_screen.dart:99:46 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\splash_screen.dart:118:60 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\splash_screen.dart:156:58 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\splash_screen.dart:159:62 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\splash_screen.dart:173:56 - deprecated_member_use
+  error - The expression doesn't evaluate to a function, so it can't be invoked - lib\screens\splash_screen.dart:184:24 - invocation_of_non_function_expression
+  error - Instance member 'bottom' can't be accessed using static access - lib\screens\splash_screen.dart:184:35 - static_access_to_instance_member
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\splash_screen.dart:192:64 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\splash_screen.dart:201:54 - deprecated_member_use
+

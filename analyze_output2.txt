@@ -1,0 +1,16 @@
+Analyzing ERP-SMART-APP...                                      
+
+   info - Unnecessary use of multiple underscores - lib\Screens\LoginScreen\login_screen.dart:234:22 - unnecessary_underscores
+   info - Statements in a for should be enclosed in a block - lib\Screens\LoginScreen\login_screen.dart:266:7 - curly_braces_in_flow_control_structures
+   info - Statements in a for should be enclosed in a block - lib\Screens\LoginScreen\login_screen.dart:268:7 - curly_braces_in_flow_control_structures
+   info - Unnecessary use of multiple underscores - lib\Screens\LoginScreen\login_screen.dart:588:31 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\Screens\LoginScreen\login_screen.dart:588:35 - unnecessary_underscores
+   info - Statements in a for should be enclosed in a block - lib\Screens\LoginScreen\signup_screen.dart:47:63 - curly_braces_in_flow_control_structures
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\Screens\LoginScreen\signup_screen.dart:180:31 - deprecated_member_use
+   info - Unnecessary use of multiple underscores - lib\Screens\LoginScreen\signup_screen.dart:331:22 - unnecessary_underscores
+   info - Statements in a for should be enclosed in a block - lib\Screens\LoginScreen\signup_screen.dart:363:7 - curly_braces_in_flow_control_structures
+   info - Statements in a for should be enclosed in a block - lib\Screens\LoginScreen\signup_screen.dart:365:7 - curly_braces_in_flow_control_structures
+   info - Unnecessary use of multiple underscores - lib\Screens\LoginScreen\signup_screen.dart:726:31 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\Screens\LoginScreen\signup_screen.dart:726:35 - unnecessary_underscores
+  error - The function 'NexaErpApp' isn't defined - test\widget_test.dart:16:30 - undefined_function
+
