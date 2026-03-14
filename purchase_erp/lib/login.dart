@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'dashboard.dart';
-import 'package:purchase_erp/Profile/privacy_policy.dart';
-import 'package:purchase_erp/Profile/terms_of_service.dart';
+import 'Profile/privacy_policy.dart';
+import 'Profile/terms_of_service.dart';
 import 'package:flutter/gestures.dart';
 
 

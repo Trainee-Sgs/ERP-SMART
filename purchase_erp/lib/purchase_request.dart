@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:purchase_erp/dashboard.dart';
-import 'package:purchase_erp/widgets/bottom_nav.dart';
+import 'dashboard.dart';
+import 'widgets/bottom_nav.dart';
 
 class PurchaseRequestScreen extends StatelessWidget {
   const PurchaseRequestScreen({super.key});

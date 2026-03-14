@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'WIdgets/erp_custom_widgets.dart';
-import '../ERP_Moduels/HRM_Module/HomeScreen/dashboard.dart';
+import 'package:hrm/views/home_screen/dashboard.dart' as hrm_mod;
+import 'package:purchase_erp/dashboard.dart' as purchase_mod;
+import 'package:crm/Home/dashboard_screen.dart' as crm_mod;
 
 // ── Dashboard Screen ─────────────────────────────────────────
 class DashboardScreen extends StatelessWidget {
@@ -147,14 +149,14 @@ class DashboardScreen extends StatelessWidget {
 }
 
 // ── Dashboard Data (16 Apps for Demonstration) ─────────────
-const _apps = [
+final _apps = [
   AppModel(
     name: 'HRM Suite',
     desc: 'Workforce',
     img:
         'https://images.unsplash.com/photo-1573496130407-57329f01f769?q=80&w=400&fit=crop',
     color: Color(0xFF3B8EFF),
-    targetScreen: const HrmDashboardScreen(),
+    targetScreen: const hrm_mod.Dashboard(),
   ),
   AppModel(
     name: 'CRM Hub',
@@ -162,13 +164,15 @@ const _apps = [
     img:
         'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=400&fit=crop',
     color: Color(0xFF0D9488),
+    targetScreen: const crm_mod.DashboardScreen(),
   ),
   AppModel(
-    name: 'Inventory',
-    desc: 'Stock',
+    name: 'Purchase',
+    desc: 'Procurement',
     img:
         'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=400&fit=crop',
     color: Color(0xFFF59E0B),
+    targetScreen: const purchase_mod.Dashboard(),
   ),
   AppModel(
     name: 'Financials',
