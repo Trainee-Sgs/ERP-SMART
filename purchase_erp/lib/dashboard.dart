@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:purchase_erp/widgets/bottom_nav.dart';
-import 'package:purchase_erp/create_pr.dart';
-import 'package:purchase_erp/purchase_orders/purchase_orders.dart';
-import 'package:purchase_erp/approvals.dart';
-import 'package:purchase_erp/notification.dart';
-import 'package:purchase_erp/Profile/profile.dart';
-import 'package:purchase_erp/RFQ/request_for_quotation.dart';
-import 'package:purchase_erp/Reports/reports_analytics.dart';
+import 'widgets/bottom_nav.dart';
+import 'create_pr.dart';
+import 'purchase_orders/purchase_orders.dart';
+import 'approvals.dart';
+import 'notification.dart';
+import 'Profile/profile.dart';
+import 'RFQ/request_for_quotation.dart';
+import 'Reports/reports_analytics.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
