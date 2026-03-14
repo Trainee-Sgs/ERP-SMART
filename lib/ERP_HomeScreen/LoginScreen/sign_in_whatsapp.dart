@@ -1,33 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'login_screen.dart';
 import 'sign_in_sms.dart';
-import 'sign_in_whatsapp.dart';
 import 'sign_up.dart';
-import 'package:hrm/services/device_service.dart';
-import 'package:hrm/models/login_api.dart';
 import 'otp_popup.dart';
+import 'package:hrm/services/device_service.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class WhatsappLogin extends StatefulWidget {
+  const WhatsappLogin({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<WhatsappLogin> createState() => _WhatsappLoginState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _WhatsappLoginState extends State<WhatsappLogin> {
   final TextEditingController _emailController = TextEditingController();
-  bool isLoadingLogin = false;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    DeviceService.initDeviceInfo(); // Refresh device id & app signature on landing
+    DeviceService.initDeviceInfo();
   }
 
   @override
   Widget build(BuildContext context) {
-    // MediaQuery
     final Size size = MediaQuery.of(context).size;
     final double height = size.height;
     final double width = size.width;
@@ -54,7 +52,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: height * 0.05),
 
-                /// Sign in title
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -69,7 +66,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: height * 0.01),
 
-                /// Subtitle
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -80,12 +76,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: height * 0.05),
 
-                /// Email Field
+                /// WhatsApp Field
                 TextField(
                   controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.phone,
+                  maxLength: 10,
+                  buildCounter:
+                      (
+                        context, {
+                        required currentLength,
+                        required isFocused,
+                        maxLength,
+                      }) => null,
                   decoration: const InputDecoration(
-                    labelText: "Enter Your Mail",
+                    labelText: "Enter WhatsApp Number",
                     labelStyle: TextStyle(color: Colors.black54),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.black26),
@@ -103,138 +107,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: 280,
                   height: height * 0.06,
                   child: ElevatedButton(
-                    onPressed: isLoadingLogin
-                        ? null
-                        : () async {
-                            if (_emailController.text.trim().isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Please enter your email"),
-                                ),
-                              );
-                              return;
-                            }
-
-                            if (!RegExp(
-                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                            ).hasMatch(_emailController.text.trim())) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Please enter a valid email"),
-                                ),
-                              );
-                              return;
-                            }
-
-                            setState(() => isLoadingLogin = true);
-
-                            // API binding commented for future implementation
-                            /*
-                            try {
-                              final prefs =
-                                  await SharedPreferences.getInstance();
-                              final lat =
-                                  prefs.getDouble('lat')?.toString() ?? "0.0";
-                              final lng =
-                                  prefs.getDouble('lng')?.toString() ?? "0.0";
-                              final deviceId =
-                                  prefs.getString('device_id') ?? "";
-                              final appSignature =
-                                  prefs.getString('app_signature') ?? "";
-
-                              final response = await LoginApi.sendOtp(
-                                mobile: _emailController.text.trim(),
-                                type: "2000",
-                                deviceId: deviceId,
-                                lat: lat,
-                                lng: lng,
-                                appSignature: appSignature,
-                              );
-
-                              debugPrint("SEND OTP RESPONSE => $response");
-
-                              if (response["error"] == false) {
-                                final String cusId =
-                                    response["cus_id"]?.toString() ?? "";
-
-                                if (response.containsKey("cid") &&
-                                    response["cid"] != null) {
-                                  final String cid = response["cid"].toString();
-                                  await prefs.setString("cid", cid);
-                                }
-                              */
-
-                            await Future.delayed(const Duration(seconds: 1));
-
-                            if (mounted) {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                builder: (context) {
-                                  return OtpBottomSheet(
-                                    phoneNumber: _emailController.text.trim(),
-                                    cusId: "12345", // Dummy ID
-                                  );
-                                },
-                              );
-                            }
-
-                            /*
-                              } else {
-                                if (mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        response["error_msg"] ??
-                                            "Failed to send OTP",
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }
-                            } catch (e) {
-                              debugPrint("SEND OTP ERROR => $e");
-                              if (mounted) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text("Server Error")),
-                                );
-                              }
-                            } finally {
-                            */
-                            if (mounted) {
-                              setState(() => isLoadingLogin = false);
-                            }
-                            // } // end of finally block logic
-                          },
+                    onPressed: isLoading ? null : _sendOtpApi,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xff26A69A),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: isLoadingLogin
+                    child: isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
                         : const Text(
                             "Next",
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                   ),
                 ),
 
-                // Spacer(),
                 SizedBox(height: height * 0.04),
 
                 /// OR Divider
                 Row(
                   children: [
                     Expanded(child: Divider(color: Colors.black26)),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
                         "or continue with",
                         style: TextStyle(fontSize: 14, color: Colors.black54),
@@ -246,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: height * 0.03),
 
-                /// WhatsApp & SMS Buttons
+                /// Social Buttons
                 Row(
                   children: [
                     Expanded(
@@ -254,24 +154,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => WhatsappLogin(),
-                            ),
+                            MaterialPageRoute(builder: (_) => LoginScreen()),
                           );
                         },
                         icon: const Icon(
-                          FontAwesomeIcons.whatsapp,
-                          color: Colors.green,
-                          size: 28,
+                          Icons.mail_outline,
+                          size: 20,
+                          color: Color(0xff26A69A),
                         ),
-
                         label: const Text(
-                          "WhatsApp",
+                          "Via Mail",
                           style: TextStyle(color: Colors.black),
                         ),
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: Color(0xff26A69A)),
-                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -284,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => SmsLogin()),
+                            MaterialPageRoute(builder: (_) => SmsLogin()),
                           );
                         },
                         icon: const Icon(
@@ -310,12 +207,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: height * 0.04),
 
-                /// Sign Up Text
+                /// Sign Up
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Donâ€™t Have an Account? ",
+                      "Don't Have an Account? ",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -326,9 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignupScreen(),
-                          ),
+                          MaterialPageRoute(builder: (_) => SignupScreen()),
                         );
                       },
                       child: const Text(
@@ -345,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: height * 0.06),
 
-                /// Terms & Conditions
+                /// Terms
                 RichText(
                   textAlign: TextAlign.center,
                   text: const TextSpan(
@@ -359,20 +254,88 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextSpan(
                         text: "Terms and Conditions",
                         style: TextStyle(
-                          color: Color(0xFF2BAE9E),
+                          color: Color(0xff26A69A),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                // SizedBox(height: height * 0.02),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  /// SEND OTP API
+  Future<void> _sendOtpApi() async {
+    final mobile = _emailController.text.trim();
+    if (mobile.isEmpty) {
+      _snack("Please enter WhatsApp number", false);
+      return;
+    }
+    if (mobile.length != 10) {
+      _snack("WhatsApp number must be exactly 10 digits", false);
+      return;
+    }
+    if (!RegExp(r'^[0-9]+$').hasMatch(mobile)) {
+      _snack("WhatsApp number must contain only digits", false);
+      return;
+    }
+
+    setState(() => isLoading = true);
+
+    try {
+      /* // API binding commented for future implementation
+      final prefs = await SharedPreferences.getInstance();
+      final lat = prefs.getDouble('lat')?.toString() ?? "0.0";
+      final lng = prefs.getDouble('lng')?.toString() ?? "0.0";
+      final deviceId = prefs.getString('device_id') ?? "";
+      final appSignature = prefs.getString('app_signature') ?? "";
+
+      final response = await LoginApi.sendOtp(
+        mobile: _emailController.text.trim(),
+        type: "2000",
+        deviceId: deviceId,
+        lat: lat,
+        lng: lng,
+        appSignature: appSignature,
+      );
+      */
+
+      await Future.delayed(const Duration(seconds: 1));
+
+      if (mounted) {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          builder: (context) {
+            return OtpBottomSheet(
+              phoneNumber: _emailController.text.trim(),
+              cusId: "12345", // Dummy ID
+            );
+          },
+        );
+      }
+    } catch (e) {
+      debugPrint("OTP ERROR => $e");
+      if (mounted) _snack("Server error", false);
+    }
+
+    if (mounted) setState(() => isLoading = false);
+  }
+
+  void _snack(String msg, bool success) {
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(msg),
+          backgroundColor: success ? Colors.green : Colors.red,
+        ),
+      );
+    }
   }
 }

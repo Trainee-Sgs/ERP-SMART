@@ -1,8 +1,7 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'dart:async';
-import 'LoginScreen/onboarding_screen.dart';
+import 'LoginScreen/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,225 +10,114 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
-  late AnimationController _mainController;
-  late AnimationController _glowController;
-
-  late Animation<double> _opacity;
-  late Animation<double> _scale;
-  late Animation<double> _glowRadius;
-
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _setupAnimations();
-    _navigateToLogin();
-  }
 
-  void _setupAnimations() {
-    _mainController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1500),
-    );
-    _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _mainController,
-        curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
-      ),
-    );
-    _scale = Tween<double>(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _mainController,
-        curve: const Interval(0.0, 0.6, curve: Curves.easeOutBack),
-      ),
-    );
-    _glowController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 2000),
-    )..repeat(reverse: true);
-    _glowRadius = Tween<double>(begin: 10.0, end: 30.0).animate(
-      CurvedAnimation(parent: _glowController, curve: Curves.easeInOut),
-    );
-    _mainController.forward();
-  }
-
-  void _navigateToLogin() {
-    Timer(const Duration(seconds: 3), () {
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const OnboardingScreen(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(opacity: animation, child: child),
-            transitionDuration: const Duration(milliseconds: 800),
-          ),
-        );
-      }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // await _saveLocation(); // Commented for future implementation
+      await _navigateNext();
     });
   }
 
-  @override
-  void dispose() {
-    _mainController.dispose();
-    _glowController.dispose();
-    super.dispose();
+  /// CHECK LOGIN & NAVIGATE
+  Future<void> _navigateNext() async {
+    /* // API binding commented for future implementation
+    final prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    // Load Security Settings
+    bool bioEnabled = prefs.getBool('auth_biometric_enabled') ?? false;
+    bool appFaceEnabled = prefs.getBool('auth_app_face_enabled') ?? false;
+    bool pinEnabled = prefs.getBool('auth_pin_enabled') ?? false;
+    String? savedPin = prefs.getString('auth_pin_code');
+    */
+
+    await Future.delayed(const Duration(seconds: 2));
+
+    if (!mounted) return;
+
+    // Direct navigation to LoginScreen for UI demonstration
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const LoginScreen()),
+    );
+
+    /*
+    if (isLoggedIn) {
+      // Check if security is enabled
+      if (bioEnabled ||
+          appFaceEnabled ||
+          (pinEnabled && savedPin != null && savedPin.isNotEmpty)) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => AppLockScreen(
+              isBiometricEnabled: bioEnabled,
+              isAppFaceEnabled: appFaceEnabled,
+              isPinEnabled: pinEnabled,
+              savedPin: savedPin,
+            ),
+          ),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const DashboardScreen()),
+        );
+      }
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+      );
+    }
+    */
+  }
+
+  /// SAVE LATITUDE & LONGITUDE
+  Future<void> _saveLocation() async {
+    /* // Commented for future implementation
+    try {
+      LocationPermission permission = await Geolocator.checkPermission();
+
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        return;
+      }
+
+      Position position = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(accuracy: LocationAccuracy.medium),
+      );
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setDouble('lat', position.latitude);
+      await prefs.setDouble('lng', position.longitude);
+    } catch (e) {
+      debugPrint("Location error in splash: $e");
+    }
+    */
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
-      body: Stack(
-        children: [
-          Positioned(
-            top: -100.h,
-            right: -100.w,
-            child: _Blob(
-              size: 300.w,
-              color: const Color(0xFF2979FF).withValues(alpha: 0.05),
-            ),
-          ),
-          Positioned(
-            bottom: -80.h,
-            left: -80.w,
-            child: _Blob(
-              size: 250.w,
-              color: const Color(0xFF2979FF).withValues(alpha: 0.03),
-            ),
-          ),
-          Center(
-            child: FadeTransition(
-              opacity: _opacity,
-              child: ScaleTransition(
-                scale: _scale,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 80.w,
-                      height: 80.w,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(24.r),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(
-                              0xFF2979FF,
-                            ).withValues(alpha: 0.1),
-                            blurRadius: 30.r,
-                            offset: Offset(0, 10.h),
-                          ),
-                        ],
-                      ),
-                      child: Icon(
-                        Icons.hub_rounded,
-                        color: const Color(0xFF2979FF),
-                        size: 40.sp,
-                      ),
-                    ),
-                    SizedBox(height: 32.h),
-                    RichText(
-                      text: TextSpan(
-                        style: GoogleFonts.syne(
-                          fontSize: 42.sp,
-                          fontWeight: FontWeight.w800,
-                          color: const Color(0xFF0F172A),
-                          letterSpacing: -1,
-                        ),
-                        children: const [
-                          TextSpan(text: 'SM'),
-                          TextSpan(
-                            text: 'ART',
-                            style: TextStyle(color: Color(0xFF2979FF)),
-                          ),
-                        ],
-                      ),
-                    ),
-                    AnimatedBuilder(
-                      animation: _glowRadius,
-                      builder: (context, child) => Text(
-                        'E R P',
-                        style: GoogleFonts.dmSans(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 12.w,
-                          color: const Color(0xFF2979FF).withValues(alpha: 0.8),
-                          shadows: [
-                            Shadow(
-                              color: const Color(
-                                0xFF2979FF,
-                              ).withValues(alpha: 0.3),
-                              blurRadius: _glowRadius.value,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 48.h),
-                    Text(
-                      'ENTERPRISE PLATFORM',
-                      style: GoogleFonts.dmSans(
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 4.w,
-                        color: const Color(0xFF64748B).withValues(alpha: 0.5),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 40.h),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    width: 24.w,
-                    height: 2.h,
-                    child: LinearProgressIndicator(
-                      backgroundColor: const Color(
-                        0xFF2979FF,
-                      ).withValues(alpha: 0.1),
-                      color: const Color(0xFF2979FF),
-                    ),
-                  ),
-                  SizedBox(height: 20.h),
-                  Text(
-                    'v 1.0.0',
-                    style: GoogleFonts.dmSans(
-                      fontSize: 11.sp,
-                      color: const Color(0xFF64748B).withValues(alpha: 0.3),
-                      letterSpacing: 2,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/erp_logo.png', width: 220.w),
+            SizedBox(height: 24.h),
+          ],
+        ),
       ),
     );
   }
 }
 
-class _Blob extends StatelessWidget {
-  final double size;
-  final Color color;
-  const _Blob({required this.size, required this.color});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: color),
-    );
-  }
-}
