@@ -45,6 +45,7 @@ flutter:
     - assets/lottie/
     - assets/
     - assets/images/
+    - assets/icons/
 
 flutter_native_splash:
   color: "#0A0F2E"
