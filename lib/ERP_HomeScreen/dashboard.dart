@@ -6,6 +6,7 @@ import 'WIdgets/erp_custom_widgets.dart';
 import 'package:hrm/views/main_root.dart' as hrm_mod;
 import 'package:crm/Home/dashboard_screen.dart' as crm_mod;
 import 'package:purchase_erp/dashboard.dart' as purchase_mod;
+import 'package:salees/Screens/HomeScreen/dashboard.dart' as sales_mod;
 
 // ── Dashboard Screen ─────────────────────────────────────────
 class DashboardScreen extends StatelessWidget {
@@ -172,6 +173,14 @@ final _apps = [
         'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=400&fit=crop',
     color: Color(0xFFF59E0B),
     targetScreen: const purchase_mod.Dashboard(),
+  ),
+  AppModel(
+    name: 'Sales',
+    desc: 'Revenue',
+    img:
+        'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=400&fit=crop',
+    color: Color(0xFF6366F1),
+    targetScreen: const sales_mod.SalesDashboard(),
   ),
 ];
 
