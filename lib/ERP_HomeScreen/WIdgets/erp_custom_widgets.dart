@@ -90,17 +90,29 @@ class ErpCustomButtom extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
-              child: Image.network(
-                app.img,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Center(
-                  child: Icon(
-                    app.icon ?? Icons.apps_rounded,
-                    color: app.color,
-                    size: 28.sp,
-                  ),
-                ),
-              ),
+              child: app.img.startsWith('http')
+                  ? Image.network(
+                      app.img,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Center(
+                        child: Icon(
+                          app.icon ?? Icons.apps_rounded,
+                          color: app.color,
+                          size: 28.sp,
+                        ),
+                      ),
+                    )
+                  : Image.asset(
+                      app.img,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Center(
+                        child: Icon(
+                          app.icon ?? Icons.apps_rounded,
+                          color: app.color,
+                          size: 28.sp,
+                        ),
+                      ),
+                    ),
             ),
           ),
           SizedBox(height: 6.h),
