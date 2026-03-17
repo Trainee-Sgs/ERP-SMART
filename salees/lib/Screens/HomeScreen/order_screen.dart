@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../Widget/custome_buttombar.dart';
+import '../OrderScreen/quotation_screen.dart';
+import '../OrderScreen/view_order_details.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
@@ -26,7 +28,7 @@ class _OrderScreenState extends State<OrderScreen> {
           title: Text(
             'Order',
             style: TextStyle(
-              color: Colors.white, 
+              color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 18.sp,
             ),
@@ -42,7 +44,10 @@ class _OrderScreenState extends State<OrderScreen> {
                 unselectedLabelColor: Colors.grey,
                 indicatorColor: Colors.green,
                 indicatorWeight: 4.h,
-                labelStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                labelStyle: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.bold,
+                ),
                 unselectedLabelStyle: TextStyle(fontSize: 14.sp),
                 tabs: const [
                   Tab(text: 'Order'),
@@ -50,62 +55,173 @@ class _OrderScreenState extends State<OrderScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 16.h),
-            
-            // Status Cards
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Row(
-                children: [
-                  _buildStatusSumCard('3', 'Completed', const Color(0xFF4CAF50)),
-                  SizedBox(width: 8.w),
-                  _buildStatusSumCard('2', 'Process', const Color(0xFF3F51B5)),
-                  SizedBox(width: 8.w),
-                  _buildStatusSumCard('1', 'Pending', const Color(0xFFA1887F)),
-                ],
-              ),
-            ),
-            SizedBox(height: 24.h),
-            
-            // Recent Header
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Row(
-                children: [
-                  Icon(Icons.access_time, size: 20.sp, color: Colors.grey),
-                  SizedBox(width: 8.w),
-                  Text(
-                    'Recent',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: Icon(Icons.tune, color: Colors.grey, size: 20.sp),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-            ),
-            
-            // Order List
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                children: [
-                  _buildOrderCard('#ORD-1234', 'Sowmiya', '2026-03-01', '3 items', '₹12,500', 'Completed', const Color(0xFF4CAF50)),
-                  _buildOrderCard('#ORD-1234', 'Sowmiya', '2026-03-01', '3 items', '₹12,500', 'Pending', const Color(0xFFA1887F)),
-                  _buildOrderCard('#ORD-1234', 'Sowmiya', '2026-03-01', '3 items', '₹12,500', 'Processing', const Color(0xFF3F51B5)),
-                  _buildOrderCard('#ORD-1234', 'Sowmiya', '2026-03-01', '3 items', '₹12,500', 'Cancelled', Colors.redAccent),
-                ],
+              child: TabBarView(
+                children: [OrderTabContent(), QuotationTabContent()],
               ),
             ),
           ],
         ),
         bottomNavigationBar: const CustomBottomBar(currentIndex: 2),
+      ),
+    );
+  }
+}
+
+class OrderTabContent extends StatefulWidget {
+  const OrderTabContent({super.key});
+
+  @override
+  State<OrderTabContent> createState() => _OrderTabContentState();
+}
+
+class _OrderTabContentState extends State<OrderTabContent> {
+  String selectedFilter = 'All';
+
+  final List<Map<String, dynamic>> allOrders = [
+    {
+      'id': '#ORD-1234',
+      'name': 'Sowmiya',
+      'date': '2026-03-01',
+      'items': '3 items',
+      'price': '₹12,500',
+      'status': 'Completed',
+      'color': const Color(0xFF4CAF50),
+    },
+    {
+      'id': '#ORD-1234',
+      'name': 'Sowmiya',
+      'date': '2026-03-01',
+      'items': '3 items',
+      'price': '₹12,500',
+      'status': 'Pending',
+      'color': const Color(0xFFA1887F),
+    },
+    {
+      'id': '#ORD-1234',
+      'name': 'Sowmiya',
+      'date': '2026-03-01',
+      'items': '3 items',
+      'price': '₹12,500',
+      'status': 'Processing',
+      'color': const Color(0xFF3F51B5),
+    },
+    {
+      'id': '#ORD-1234',
+      'name': 'Sowmiya',
+      'date': '2026-03-01',
+      'items': '3 items',
+      'price': '₹12,500',
+      'status': 'Cancelled',
+      'color': Colors.redAccent,
+    },
+  ];
+
+  List<Map<String, dynamic>> get filteredOrders {
+    if (selectedFilter == 'All') return allOrders;
+    return allOrders.where((o) => o['status'] == selectedFilter).toList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: 16.h),
+        // Status Cards
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Row(
+            children: [
+              _buildStatusSumCard('3', 'Completed', const Color(0xFF4CAF50)),
+              SizedBox(width: 8.w),
+              _buildStatusSumCard('2', 'Process', const Color(0xFF3F51B5)),
+              SizedBox(width: 8.w),
+              _buildStatusSumCard('1', 'Pending', const Color(0xFFA1887F)),
+            ],
+          ),
+        ),
+        SizedBox(height: 24.h),
+
+        // Recent Header with Dropdown
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Row(
+            children: [
+              Icon(
+                selectedFilter == 'All' ? Icons.access_time : Icons.label_outline,
+                size: 20.sp,
+                color: Colors.grey,
+              ),
+              SizedBox(width: 8.w),
+              Text(
+                selectedFilter == 'All' ? 'Recent' : '$selectedFilter Status',
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey,
+                ),
+              ),
+              const Spacer(),
+              PopupMenuButton<String>(
+                icon: Icon(Icons.tune, color: Colors.grey, size: 20.sp),
+                onSelected: (String value) {
+                  setState(() {
+                    selectedFilter = value;
+                  });
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  _buildPopupMenuItem('All'),
+                  _buildPopupMenuItem('Completed'),
+                  _buildPopupMenuItem('Pending'),
+                  _buildPopupMenuItem('Processing'),
+                  _buildPopupMenuItem('Cancelled'),
+                ],
+                offset: Offset(0, 30.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Order List
+        Expanded(
+          child: ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            itemCount: filteredOrders.length,
+            itemBuilder: (context, index) {
+              final o = filteredOrders[index];
+              return _buildOrderCard(
+                context,
+                o['id'],
+                o['name'],
+                o['date'],
+                o['items'],
+                o['price'],
+                o['status'],
+                o['color'],
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  PopupMenuItem<String> _buildPopupMenuItem(String value) {
+    return PopupMenuItem<String>(
+      value: value,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 2.h),
+        child: Text(
+          value,
+          style: TextStyle(
+            fontSize: 14.sp,
+            color: const Color(0xFF2E3B9E),
+            fontWeight: selectedFilter == value ? FontWeight.bold : FontWeight.normal,
+          ),
+        ),
       ),
     );
   }
@@ -130,10 +246,7 @@ class _OrderScreenState extends State<OrderScreen> {
             ),
             Text(
               label,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12.sp,
-              ),
+              style: TextStyle(color: Colors.white, fontSize: 12.sp),
             ),
           ],
         ),
@@ -141,7 +254,16 @@ class _OrderScreenState extends State<OrderScreen> {
     );
   }
 
-  Widget _buildOrderCard(String id, String name, String date, String items, String price, String status, Color statusColor) {
+  Widget _buildOrderCard(
+    BuildContext context,
+    String id,
+    String name,
+    String date,
+    String items,
+    String price,
+    String status,
+    Color statusColor,
+  ) {
     return Container(
       margin: EdgeInsets.only(bottom: 16.h),
       padding: EdgeInsets.all(16.r),
@@ -189,13 +311,22 @@ class _OrderScreenState extends State<OrderScreen> {
             ],
           ),
           SizedBox(height: 8.h),
-          Text(name, style: TextStyle(color: Colors.grey, fontSize: 13.sp)),
+          Text(
+            name,
+            style: TextStyle(color: Colors.grey, fontSize: 13.sp),
+          ),
           SizedBox(height: 4.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(date, style: TextStyle(color: Colors.grey, fontSize: 13.sp)),
-              Text(items, style: TextStyle(color: Colors.grey, fontSize: 13.sp)),
+              Text(
+                date,
+                style: TextStyle(color: Colors.grey, fontSize: 13.sp),
+              ),
+              Text(
+                items,
+                style: TextStyle(color: Colors.grey, fontSize: 13.sp),
+              ),
             ],
           ),
           Divider(height: 24.h),
@@ -211,10 +342,26 @@ class _OrderScreenState extends State<OrderScreen> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ViewOrderDetailsScreen(
+                        orderId: id,
+                        status: status,
+                        customerName: name,
+                        date: date,
+                      ),
+                    ),
+                  );
+                },
                 child: Row(
                   children: [
-                    Icon(Icons.visibility_outlined, size: 18.sp, color: const Color(0xFF2E3B9E)),
+                    Icon(
+                      Icons.visibility_outlined,
+                      size: 18.sp,
+                      color: const Color(0xFF2E3B9E),
+                    ),
                     SizedBox(width: 4.w),
                     Text(
                       'View Detail',

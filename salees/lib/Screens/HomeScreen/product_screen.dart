@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../Widget/custome_buttombar.dart';
+import '../ProductScreen/add_product.dart';
+import '../ProductScreen/edit_product.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
@@ -37,13 +39,17 @@ class _ProductScreenState extends State<ProductScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Products',
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey,
-                  ),
+                Column(
+                  children: [
+                    Text(
+                      'Products',
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 ),
                 IconButton(
                   icon: Icon(Icons.tune, color: Colors.black87, size: 24.sp),
@@ -143,7 +149,12 @@ class _ProductScreenState extends State<ProductScreen> {
         width: 56.w,
         height: 56.h,
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => const AddProductScreen(),
+            );
+          },
           backgroundColor: const Color(0xFF2E3B9E),
           child: Icon(Icons.add, color: Colors.white, size: 30.sp),
         ),
@@ -152,7 +163,15 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Widget _buildProductCard(String name, String category, String price, String stock, String status, Color statusColor, String imageUrl) {
+  Widget _buildProductCard(
+    String name,
+    String category,
+    String price,
+    String stock,
+    String status,
+    Color statusColor,
+    String imageUrl,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -188,13 +207,30 @@ class _ProductScreenState extends State<ProductScreen> {
               Positioned(
                 top: 8.h,
                 right: 8.w,
-                child: Container(
-                  padding: EdgeInsets.all(4.r),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => EditProductScreen(
+                        productName: name,
+                        category: category,
+                        price: price,
+                        stock: stock,
+                      ),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(4.r),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.edit_note,
+                      size: 18.sp,
+                      color: Colors.redAccent,
+                    ),
                   ),
-                  child: Icon(Icons.edit_note, size: 18.sp, color: Colors.redAccent),
                 ),
               ),
             ],
@@ -234,7 +270,11 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                     Row(
                       children: [
-                        Icon(Icons.inventory_2_outlined, size: 12.sp, color: Colors.grey),
+                        Icon(
+                          Icons.inventory_2_outlined,
+                          size: 12.sp,
+                          color: Colors.grey,
+                        ),
                         SizedBox(width: 2.w),
                         Text(
                           stock,

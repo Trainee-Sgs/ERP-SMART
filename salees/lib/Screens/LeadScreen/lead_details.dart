@@ -8,7 +8,7 @@ class LeadDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FE),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: const Color(0xFF2E3B9E),
         elevation: 0,
@@ -21,19 +21,19 @@ class LeadDetailsScreen extends StatelessWidget {
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 18.sp,
+            fontSize: 20.sp,
           ),
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.r),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Quick Actions',
               style: TextStyle(
-                fontSize: 18.sp,
+                fontSize: 22.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -43,7 +43,7 @@ class LeadDetailsScreen extends StatelessWidget {
               children: [
                 _buildQuickActionCard(
                   context,
-                  Icons.assignment_turned_in_outlined,
+                  Icons.assignment_outlined,
                   'Create\nQuotation',
                   onTap: () {
                     Navigator.push(
@@ -57,26 +57,24 @@ class LeadDetailsScreen extends StatelessWidget {
                 SizedBox(width: 12.w),
                 _buildQuickActionCard(
                   context,
-                  Icons.person_add_alt_1_outlined,
+                  Icons.person_remove_outlined,
                   'Convert to\nCustomer',
                 ),
                 SizedBox(width: 12.w),
-                _buildQuickActionCard(context, Icons.update, 'Update\nStatus'),
+                _buildQuickActionCard(context, Icons.history, 'Update\nStatus'),
               ],
             ),
-            SizedBox(height: 24.h),
+            SizedBox(height: 32.h),
             Text(
               'Lead Information',
               style: TextStyle(
-                fontSize: 18.sp,
+                fontSize: 22.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
             ),
             SizedBox(height: 16.h),
-            _buildLeadInfoBox(),
-            SizedBox(height: 16.h),
-            _buildLeadSourceBox(),
+            _buildLeadInfoCard(),
           ],
         ),
       ),
@@ -93,7 +91,7 @@ class LeadDetailsScreen extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          height: 80.h,
+          height: 100.h,
           padding: EdgeInsets.all(8.r),
           decoration: BoxDecoration(
             color: const Color(0xFF2E3B9E),
@@ -102,14 +100,14 @@ class LeadDetailsScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, color: Colors.white, size: 20.sp),
-              SizedBox(height: 4.h),
+              Icon(icon, color: Colors.white, size: 28.sp),
+              SizedBox(height: 8.h),
               Text(
                 label,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 11.sp,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -120,148 +118,166 @@ class LeadDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLeadInfoBox() {
+  Widget _buildLeadInfoCard() {
     return Container(
-      padding: EdgeInsets.all(20.r),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: const Color(0xFF2E3B9E).withOpacity(0.5)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10.r,
-            offset: Offset(0, 4.h),
-          ),
-        ],
       ),
       child: Column(
         children: [
-          Row(
-            children: [
-              _buildInfoItem(Icons.person, 'Lead Name', 'Sowmiya'),
-              const Spacer(),
-              _buildInfoItem(
-                Icons.business,
-                'Company',
-                'Digital Marketing Hub',
-              ),
-            ],
+          Padding(
+            padding: EdgeInsets.all(20.r),
+            child: Column(
+              children: [
+                _buildInfoItem(
+                  Icons.person,
+                  'Lead Name',
+                  'Sowmiya',
+                  showBadge: true,
+                ),
+                SizedBox(height: 20.h),
+                _buildInfoItem(
+                  Icons.business,
+                  'Company',
+                  'Digital Marketing Hub',
+                ),
+                SizedBox(height: 20.h),
+                _buildInfoItem(Icons.phone, 'Phone', '+91 98765 43211'),
+                SizedBox(height: 20.h),
+                _buildInfoItem(Icons.email, 'Email', 'priya@digitalhub.com'),
+              ],
+            ),
           ),
-          SizedBox(height: 20.h),
-          Row(
-            children: [
-              _buildInfoItem(Icons.phone, 'Phone', '+91 98765 43211'),
-              const Spacer(),
-              _buildInfoItem(Icons.email, 'Email', 'priya@digitalhub.com'),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInfoItem(IconData icon, String label, String value) {
-    return Expanded(
-      child: Column(
-        children: [
           Container(
-            padding: EdgeInsets.all(10.r),
-            decoration: const BoxDecoration(
-              color: Color(0xFF26C6DA),
-              shape: BoxShape.circle,
+            padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 24.w),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF5F6F8),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(12.r),
+                bottomRight: Radius.circular(12.r),
+              ),
             ),
-            child: Icon(icon, color: Colors.white, size: 24.sp),
-          ),
-          SizedBox(height: 8.h),
-          Text(
-            label,
-            style: TextStyle(
-              color: const Color(0xFF2E3B9E),
-              fontSize: 14.sp,
-              fontWeight: FontWeight.bold,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Lead Source',
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 4.h),
+                    Text(
+                      'Referral',
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Created Date',
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 4.h),
+                    Text(
+                      '2026-03-01',
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ),
-          Text(
-            value,
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black87, fontSize: 13.sp),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildLeadSourceBox() {
-    return Container(
-      padding: EdgeInsets.all(16.r),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: const Color(0xFF2E3B9E).withOpacity(0.5)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10.r,
-            offset: Offset(0, 4.h),
+  Widget _buildInfoItem(
+    IconData icon,
+    String label,
+    String value, {
+    bool showBadge = false,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          padding: EdgeInsets.all(12.r),
+          decoration: const BoxDecoration(
+            color: Color(0xFF26C6DA),
+            shape: BoxShape.circle,
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Icon(icon, color: Colors.white, size: 24.sp),
+        ),
+        SizedBox(width: 16.w),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Lead Source',
+                    label,
                     style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: const Color(0xFF2E3B9E),
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Text(
-                    'Referral',
-                    style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
-                  ),
+                  if (showBadge)
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 4.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF6C7CFF),
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      child: Text(
+                        'New',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                 ],
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF6C7CFF),
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
-                child: Text(
-                  'New',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Text(
+                value,
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 16.h),
-          Text(
-            'Created Date',
-            style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          Text(
-            '2026-03-01',
-            style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
