@@ -4,6 +4,9 @@ import '../../Widget/custome_buttombar.dart';
 import '../LeadScreen/lead_management.dart';
 import 'product_screen.dart';
 import '../InvoiceScreen/invoice_dashboard.dart';
+import 'report_screen.dart';
+import '../DrawerScreen/drawer.dart';
+import '../PaymentScreen/payment.dart';
 
 class SalesDashboard extends StatefulWidget {
   const SalesDashboard({super.key});
@@ -20,9 +23,11 @@ class _SalesDashboardState extends State<SalesDashboard> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF2E3B9E),
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white, size: 24.sp),
-          onPressed: () => Navigator.pop(context),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu, color: Colors.white, size: 24.sp),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
         title: Text(
           'Sales Dashboard',
@@ -148,37 +153,52 @@ class _SalesDashboardState extends State<SalesDashboard> {
                       ),
                     ),
                   ),
-                  _buildQuickAction(Icons.account_balance_wallet, 'Payment'),
+                  _buildQuickAction(
+                    Icons.account_balance_wallet,
+                    'Payment',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PaymentScreen(),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
             SizedBox(height: 16.h),
 
             // Report Bar
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-              decoration: BoxDecoration(
-                color: const Color(0xFFD32F2F),
-                borderRadius: BorderRadius.circular(10.r),
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ReportScreen()),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Report',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.sp,
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFD32F2F),
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Report',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.sp,
+                      ),
                     ),
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.white,
-                    size: 16.sp,
-                  ),
-                ],
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
+                      size: 16.sp,
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(height: 24.h),
@@ -271,6 +291,7 @@ class _SalesDashboardState extends State<SalesDashboard> {
           ],
         ),
       ),
+      drawer: const CustomDrawer(),
       bottomNavigationBar: const CustomBottomBar(currentIndex: 0),
     );
   }
