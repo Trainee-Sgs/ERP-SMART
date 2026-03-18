@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hrm/views/home/settings.dart';
@@ -84,7 +84,10 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
       try {
         final bool didAuthenticate = await auth.authenticate(
           localizedReason: 'Scan your fingerprint to register it for this app',
-          biometricOnly: true,
+          options: const AuthenticationOptions(
+            biometricOnly: true,
+            stickyAuth: true,
+          ),
         );
 
         if (didAuthenticate) {

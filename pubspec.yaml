@@ -26,7 +26,7 @@ dependencies:
   purchase_erp:
     path: ./purchase_erp
   crm:
-    path: "./CRM/crm dark"
+    path: ./CRM
   hrm:
     path: ./hrm
   salees:

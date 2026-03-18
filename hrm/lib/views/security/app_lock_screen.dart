@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screen_lock/flutter_screen_lock.dart';
@@ -67,8 +67,10 @@ class _AppLockScreenState extends State<AppLockScreen>
       // ignore: deprecated_member_use_from_same_package
       final authenticated = await auth.authenticate(
         localizedReason: 'Secure Authentication Required',
-        // Using direct parameters as observed in the project's security settings
-        biometricOnly: true,
+        options: const AuthenticationOptions(
+          biometricOnly: true,
+          stickyAuth: true,
+        ),
       );
       if (authenticated && mounted) _navigateToHome();
     } catch (e) {
