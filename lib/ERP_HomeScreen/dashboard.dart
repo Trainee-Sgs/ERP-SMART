@@ -6,7 +6,7 @@ import 'WIdgets/erp_custom_widgets.dart';
 import 'package:hrm/views/main_root.dart' as hrm_mod;
 import 'package:crm/Home/dashboard_screen.dart' as crm_mod;
 import 'package:purchase_erp/dashboard.dart' as purchase_mod;
-import 'package:salees/Screens/HomeScreen/dashboard.dart' as sales_mod;
+import 'package:sales/Screens/HomeScreen/dashboard.dart' as sales_mod;
 
 // ── Dashboard Screen ─────────────────────────────────────────
 class DashboardScreen extends StatelessWidget {
