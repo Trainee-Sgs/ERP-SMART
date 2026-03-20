@@ -29,8 +29,8 @@ dependencies:
     path: ./CRM
   hrm:
     path: ./hrm
-  salees:
-    path: ./salees
+  sales:
+    path: ./sales
 
 dev_dependencies:
   flutter_test:

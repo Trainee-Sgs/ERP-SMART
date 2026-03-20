@@ -1253,10 +1253,10 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.7"
-  salees:
+  sales:
     dependency: "direct main"
     description:
-      path: salees
+      path: sales
       relative: true
     source: path
     version: "1.0.0+1"
