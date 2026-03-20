@@ -118,27 +118,23 @@ class _NotificationViewScreenState extends State<NotificationViewScreen> {
             ),
             itemBuilder: (BuildContext context) {
               final List<String> choices = ['Order', 'Invoice', 'Payment', 'Product', 'All'];
-              return choices.asMap().entries.expand<PopupMenuEntry<String>>((entry) {
+              return choices.asMap().entries.map<PopupMenuEntry<String>>((entry) {
                 int index = entry.key;
                 String choice = entry.value;
-                return <PopupMenuEntry<String>>[
-                  PopupMenuItem<String>(
-                    value: choice,
-                    height: 40.h,
-                    child: Center(
-                      child: Text(
-                        choice,
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
+                return PopupMenuItem<String>(
+                  value: choice,
+                  height: 40.h,
+                  child: Center(
+                    child: Text(
+                      choice,
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   ),
-                  if (index < choices.length - 1)
-                    const PopupMenuDivider(height: 0),
-                ];
+                );
               }).toList();
             },
           ),
