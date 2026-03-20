@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=D:\flutter"
-export "FLUTTER_APPLICATION_PATH=D:\Client project\hrm"
+export "FLUTTER_APPLICATION_PATH=D:\ERP APP PROJECT\ERP-SMART-APP\hrm"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib\main.dart"
 export "FLUTTER_BUILD_DIR=build"
